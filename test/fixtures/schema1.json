@@ -36,9 +36,9 @@
       "description": "Object 2",
       "properties": {
         "attribute_two": {
-          "type": "string",
+          "type": "number",
           "description": "Attribute 2",
-          "example": "Two"
+          "example": 2
         }
       }
     }
@@ -78,13 +78,20 @@
           "description": "Object 2",
           "properties": {
             "attribute_two": {
-              "type": "string",
+              "type": "number",
               "description": "Attribute 2",
-              "example": "Two"
+              "example": 2
             }
           }
         }
-      ]
+      ],
+      "properties": {
+        "outer": {
+          "type": "number",
+          "description": "Attribute outside of a oneOf",
+          "example": 42
+        }
+      }
     },
     "option": {
       "type": "object",
@@ -94,9 +101,9 @@
           "description": "Object 2",
           "properties": {
             "attribute_two": {
-              "type": "string",
+              "type": "number",
               "description": "Attribute 2",
-              "example": "Two"
+              "example": 2
             }
           }
         },
@@ -131,9 +138,9 @@
           "description": "Object 2",
           "properties": {
             "attribute_two": {
-              "type": "string",
+              "type": "number",
               "description": "Attribute 2",
-              "example": "Two"
+              "example": 2
             }
           }
         }
@@ -212,14 +219,15 @@
     }
   },
   "additionalProperties": {
-    "plus_one": {
-      "type": "string",
-      "description": "Foo property",
-      "example": "bar"
-    }
-  },
-  "generator": {
-    "includeAdditionalProperties": true
+    "type": "object",
+    "description": "More stuff",
+    "properties": {
+      "inner": {
+        "type": "string",
+        "example": "bar"
+      }
+    },
+    "example": {"bar": "this is a string"}
   },
   "links": [
     {
@@ -280,9 +288,9 @@
                 "description": "Object 2",
                 "properties": {
                   "attribute_two": {
-                    "type": "string",
+                    "type": "number",
                     "description": "Attribute 2",
-                    "example": "Two"
+                    "example": 2
                   }
                 }
               }

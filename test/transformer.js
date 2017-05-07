@@ -114,11 +114,12 @@ describe('Schema Transformer', function() {
       expect(this.example.foo).to.equal('bar');
       expect(this.example.baz).to.equal('boo');
       expect(this.example.boo).to.eql({
-        attribute_one: 'One'
+        attribute_one: 'One',
+        outer: 42
       });
       expect(this.example.composite).to.eql({
         attribute_one: 'One',
-        attribute_two: 'Two'
+        attribute_two: 2
       });
       expect(this.example.nested_object).to.not.be.empty;
     });
@@ -132,7 +133,8 @@ describe('Schema Transformer', function() {
         baz: 'boo',
         array_prop: ['bar'],
         boo: {
-          attribute_one: 'One'
+          attribute_one: 'One',
+          outer: 42
         },
         nested_object: {
           baz: 'boo',
@@ -140,12 +142,11 @@ describe('Schema Transformer', function() {
         },
         composite: {
           attribute_one: 'One',
-          attribute_two: 'Two'
+          attribute_two: 2
         },
         option: {
-          attribute_two: 'Two'
-        },
-        plus_one: 'bar'
+          attribute_two: 2
+        }
       });
 
         it('should handle rel=self references as an array', function() {
@@ -167,10 +168,10 @@ describe('Schema Transformer', function() {
             },
             composite: {
               attribute_one: 'One',
-              attribute_two: 'Two'
+              attribute_two: 2
             },
             option: {
-              attribute_two: 'Two'
+              attribute_two: 2
             },
             plus_one: 'bar'
           });

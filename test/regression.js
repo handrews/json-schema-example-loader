@@ -20,6 +20,16 @@ describe('Schema Transformer Regression', function() {
     this.regression = _.cloneDeep(regression);
   });
 
+  describe("#noAdditionalPropertiesObjectMerge", function() {
+    beforeEach(function() {
+      this.definition = new ObjectDefinition(this.regression);
+    });
+
+    it('should NOT include keys from additional properties', function() {
+      expect(this.definition.all_props).to.not.contain.key('plus_one');
+    });
+  });
+
   describe('#transformLinkRegression', function() {
     beforeEach(function() {
       this.link = transformer.transformLink(this.regression, this.regression.links[0]);

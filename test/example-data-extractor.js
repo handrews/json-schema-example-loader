@@ -53,13 +53,14 @@ describe('Example Data Extractor', function() {
       expect(this.example.foo, 'internal reference').to.equal('bar');
       expect(this.example.baz, 'external reference').to.equal('boo');
       expect(this.example.boo, 'oneOf reference').to.have.property('attribute_one').that.equals('One');
+      expect(this.example.boo, 'outer properties reference').to.have.property('outer').that.equals(42);
     });
 
     it('should merge allOf objects together', function() {
       expect(this.example.composite).to.be.an('object');
       expect(this.example.composite).to.have.keys(['attribute_one', 'attribute_two']);
       expect(this.example.composite).to.have.property('attribute_one').that.equals('One');
-      expect(this.example.composite).to.have.property('attribute_two').that.equals('Two');
+      expect(this.example.composite).to.have.property('attribute_two').that.equals(2);
     });
 
     it('should resolve rel=self references', function() {
@@ -82,11 +83,12 @@ describe('Example Data Extractor', function() {
     });
 
     it('should resolve the first oneOf reference', function() {
-      expect(this.example.boo).to.have.property('attribute_one').that.equals('One');
+      expect(this.example.boo, 'oneOf reference').to.have.property('attribute_one').that.equals('One');
+      expect(this.example.boo, 'outer properties reference').to.have.property('outer').that.equals(42);
     });
 
     it('should resolve the first anyOf reference', function() {
-      expect(this.example.option).to.have.property('attribute_two').that.equals('Two');
+      expect(this.example.option).to.have.property('attribute_two').that.equals(2);
     });
 
     it('should resolve array references', function() {
@@ -108,7 +110,7 @@ describe('Example Data Extractor', function() {
     });
 
     it('should use the first item in oneOf references', function() {
-      expect(this.example).to.have.property('boo').that.has.key('attribute_one');
+      expect(this.example).to.have.property('boo').that.has.keys(['attribute_one', 'outer']);
     });
 
     it('should use the first item in anyOf references', function() {
@@ -121,10 +123,6 @@ describe('Example Data Extractor', function() {
           rel: 'self'
         }
       }, this.schema1)).to.be.an('object');
-    });
-
-    it('should include additional properties', function() {
-      expect(this.example).to.have.property('plus_one').that.is.not.empty;
     });
   });
 });

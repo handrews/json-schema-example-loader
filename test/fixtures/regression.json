@@ -1,8 +1,16 @@
 {
   "id": "/fixtures/regression",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
   "title": "Regression Test Schema",
+  "type": "object",
+  "properties": {
+    "str": {"type": "string"}
+  },
+  "additionalProperties": {
+    "plus_one": {
+      "description": "Tests for old merge-add'l-properties behavior."
+    }
+  },
   "links": [
     {
       "title": "Test bugs: required outside of schema",

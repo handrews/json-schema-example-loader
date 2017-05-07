@@ -26,7 +26,7 @@ describe('Object Definition', function() {
   });
 
   beforeEach(function() {
-    this.definitionObjectKeys = ['title', 'description', 'all_props', 'required_props', 'optional_props', 'objects', 'example'];
+    this.definitionObjectKeys = ['title', 'description', 'all_props', 'required_props', 'optional_props', 'additional_props', 'objects', 'example'];
     this.definition = new ObjectDefinition(this.schema1);
     this.linkParameters = new ObjectDefinition(this.schema1.links[2].schema);
   });
@@ -54,6 +54,7 @@ describe('Object Definition', function() {
     });
 
     it('should merge results of build into itself', function() {
+      console.error(this.definition);
       expect(this.definition).to.contain.keys(this.definitionObjectKeys);
     });
   });
@@ -119,8 +120,26 @@ describe('Object Definition', function() {
       expect(result.objects[1], 'second object').to.have.keys(this.definitionObjectKeys);
     });
 
-    it('should include additional properties in all props when defined', function() {
-      expect(this.definition.all_props).to.contain.key('plus_one');
+    it('should include additional properties with stringified example', function() {
+      expect(this.definition).to.contain.key('additional_props').that.is.an('object');
+      expect(this.definition.additional_props.example).to.be.a('string');
+    });
+
+    it('additional_props should be null if additionalProperties is absent', function() {
+      var schema = {
+        type: "object"
+      };
+      var result = this.definition.build(schema);
+      expect(result.additional_props).to.be.null;
+    });
+
+    it('should handle an additionalProperties value of false', function() {
+      var schema = {
+        type: "object",
+        additionalProperties: false
+      };
+      var result = this.definition.build(schema);
+      expect(result.additional_props).to.be.false;
     });
 
     it('should build an example', function() {
@@ -133,7 +152,6 @@ describe('Object Definition', function() {
       expect(this.definition.example).to.contain('composite');
       expect(this.definition.example).to.contain('nested_object');
       expect(this.definition.example).to.contain('array_prop');
-      expect(this.definition.example).to.contain('plus_one');
     });
   });
 
